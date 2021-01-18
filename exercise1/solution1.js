@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mongo-exercises');
+mongoose.connect('mongodb://localhost/mongo-exercises', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const courseSchema = new mongoose.Schema({
   name: String,
@@ -17,7 +20,9 @@ async function getCourses() {
   return await Course
   .find({ isPublished: true, tags: 'backend' })
   .sort({ name: 1 })
+  // .sort('name')
   .select({ name: 1, author: 1 });
+  // .select('name author');
 }
 
 async function run() {
